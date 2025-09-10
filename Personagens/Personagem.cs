@@ -1,6 +1,6 @@
 namespace text_wars
 {
-    public class Personagem
+    public abstract class Personagem
     {
         // Atributos
         private string nome = "";
@@ -65,23 +65,7 @@ namespace text_wars
         }
 
         // Métodos
-        public void atacar(Personagem alvo)
-        {
-            double dano = this.Forca;
-
-            Console.WriteLine(this.Nome + " ataca " + alvo.nome + " com " + dano + " de força!" + "\n");
-
-            alvo.vida -= Convert.ToInt32(dano); // Converte o dano para int e reduz a vida do alvo
-
-            if (alvo.vida <= 0)
-            {
-                Console.WriteLine(alvo.Nome + " foi derrotado." + "\n");
-            }
-            else
-            {
-                Console.WriteLine("A vida de " + alvo.Nome + " agora é " + alvo.vida + "\n");
-            }
-        }
+        public abstract void atacar(Personagem alvo);
 
         // Construtor
         public Personagem(string nome, int vida, double forca, ClassePersonagem classe)

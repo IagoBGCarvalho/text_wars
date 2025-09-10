@@ -11,6 +11,10 @@ namespace text_wars
     {
         static void Main(string[] args)
         {
+            // Declaração de variáveis
+            string decisao = "";
+
+            // Corpo
             try
             {
                 List<Personagem> personagens = new List<Personagem>(); // List gera uma lista dinâmica onde é possível adicionar, remover e iterar. Apenas guarda objetos do tipo Personagem ou derivados dele (mago, guerreiro...)
@@ -45,7 +49,17 @@ namespace text_wars
 
                     // Turno do jogador 1
                     Console.WriteLine("---Turno de " + p1.Nome + "---");
-                    p1.atacar(p2);
+                    Console.WriteLine("Digite a ação desejada: (A) - Atacar (P) - Passar");
+                    decisao = Console.ReadLine() ?? ""; // O operador de coalescência evita que a string decisão (que não pode ser nula) receba um valor nulo, retornando uma string vazia caso isso aconteça
+
+                    if (decisao == "A")
+                    {
+                        p1.atacar(p2);
+                    }
+                    else
+                    {
+                        Console.WriteLine("O jogador " + p1.Nome + " passou a vez.\n");
+                    }
 
                     // Verificacao
                     if (p2.Vida <= 0)
@@ -55,7 +69,17 @@ namespace text_wars
 
                     // Turno do jogador 2
                     Console.WriteLine("---Turno de " + p2.Nome + "---");
-                    p2.atacar(p1);
+                    Console.WriteLine("Digite a ação desejada: (A) - Atacar (P) - Passar");
+                    decisao = Console.ReadLine() ?? "";
+
+                    if (decisao == "A")
+                    {
+                        p2.atacar(p1);
+                    }
+                    else
+                    {
+                        Console.WriteLine("O jogador " + p2.Nome + " passou a vez.\n");
+                    }
 
                     // Verificacao
                     if (p1.Vida <= 0)
