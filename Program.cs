@@ -15,10 +15,10 @@ namespace text_wars
             {
                 List<Personagem> personagens = new List<Personagem>(); // List gera uma lista dinâmica onde é possível adicionar, remover e iterar. Apenas guarda objetos do tipo Personagem ou derivados dele (mago, guerreiro...)
 
-                Guerreiro p1 = new Guerreiro("Nines");
+                Guerreiro p1 = new Guerreiro("Kratos");
                 personagens.Add(p1); // Adiciona p1 na lista dinâmica
 
-                Mago p2 = new Mago("Olavo");
+                Mago p2 = new Mago("Patolino");
                 personagens.Add(p2);
 
                 Console.WriteLine("---Apresentação de personagens---\n");
