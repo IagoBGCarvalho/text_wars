@@ -21,6 +21,8 @@ namespace text_wars
                 Mago p2 = new Mago("Olavo");
                 personagens.Add(p2);
 
+                Console.WriteLine("---Apresentação de personagens---\n");
+
                 foreach (Personagem personagem in personagens)
                 {
                     // Loop for que, para cada objeto personagem do tipo Personagem na lista personagens, exibe seu nome, classe, vida e força
@@ -28,20 +30,62 @@ namespace text_wars
                 }
 
                 Console.WriteLine("\n");
+                Console.WriteLine("---A batalha começou!---\n");
 
-                p1.atacar(p2);
-                p2.atacar(p1);
-                
+                while (p1.Vida > 0 && p2.Vida > 0)
+                {
+                    // Game loop da batalha de turnos
+                    // Logica:
+                    // 1 - Verificar condição de vitória - Enquanto todos os jogadores estiverem vivos
+                    // 2 - Turno do jogador 1
+                    // 3 - Verificar condição
+                    // 4 - Turno do jogador 2
+                    // 5 - Verificar condição
+                    // 6 - Volta para o passo 1
 
-                p2.atacar(p1);
-                p1.atacar(p2);
-                
+                    // Turno do jogador 1
+                    Console.WriteLine("---Turno de " + p1.Nome + "---");
+                    p1.atacar(p2);
 
-                Console.WriteLine(Personagem.ContagemJogadores);
+                    // Verificacao
+                    if (p2.Vida <= 0)
+                    {
+                        break;
+                    }
+
+                    // Turno do jogador 2
+                    Console.WriteLine("---Turno de " + p2.Nome + "---");
+                    p2.atacar(p1);
+
+                    // Verificacao
+                    if (p1.Vida <= 0)
+                    {
+                        break;
+                    }
+                }
+
+                // Declaração de vencedor
+                Console.WriteLine("---Fim da batalha!---");
+                Console.WriteLine("\n");
+
+                if (p1.Vida <= 0)
+                {
+                    Console.WriteLine(p2.Nome + " venceu!!!");
+                }
+                else if (p2.Vida <= 0)
+                {
+                    Console.WriteLine(p2.Nome + " venceu!!!");
+                }
+                else
+                {
+                    Console.WriteLine("Empatou");
+                }
+
+                Console.WriteLine("Contagem de jogadores: " + Personagem.ContagemJogadores);
             }
             catch (ArgumentException ex)
             {
-                Console.WriteLine("Contagem de jogadores: " + ex.Message);
+                Console.WriteLine(ex.Message);
             }
         }
     }
