@@ -49,12 +49,16 @@ namespace text_wars
 
                     // Turno do jogador 1
                     Console.WriteLine("---Turno de " + p1.Nome + "---");
-                    Console.WriteLine("Digite a ação desejada: (A) - Atacar (P) - Passar");
+                    Console.WriteLine("Digite a ação desejada: (A) - Atacar (D) - Defender (P) - Passar");
                     decisao = Console.ReadLine() ?? ""; // O operador de coalescência evita que a string decisão (que não pode ser nula) receba um valor nulo, retornando uma string vazia caso isso aconteça
 
                     if (decisao == "A")
                     {
                         p1.atacar(p2);
+                    }
+                    else if (decisao == "D")
+                    {
+                        p1.Defender();
                     }
                     else
                     {
@@ -69,12 +73,16 @@ namespace text_wars
 
                     // Turno do jogador 2
                     Console.WriteLine("---Turno de " + p2.Nome + "---");
-                    Console.WriteLine("Digite a ação desejada: (A) - Atacar (P) - Passar");
+                    Console.WriteLine("Digite a ação desejada: (A) - Atacar (D) - Defender (P) - Passar");
                     decisao = Console.ReadLine() ?? "";
 
                     if (decisao == "A")
                     {
                         p2.atacar(p1);
+                    }
+                    else if (decisao == "D")
+                    {
+                        p2.Defender();
                     }
                     else
                     {

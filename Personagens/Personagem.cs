@@ -10,6 +10,8 @@ namespace text_wars
         public ClassePersonagem Classe { get; private set; } // Propriedade referente a escolha de classe, o set é private pois a classe não pode ser alterada depois de escolhida
         public static int ContagemJogadores { get; private set; }
 
+        private bool estaDefendendo = false; // Flag para sinalizar se o personagem está em modo de defesa
+
         // getters e setters
         public string Nome
         {
@@ -66,6 +68,35 @@ namespace text_wars
 
         // Métodos
         public abstract void atacar(Personagem alvo);
+
+        public void Defender()
+        {
+            // Método que ativa o modo de defesa
+            Console.WriteLine(this.Nome + " está se defendendo para o proximo ataque.\n");
+            this.estaDefendendo = true;
+        }
+
+        public void ReceberDano(double danoBruto)
+        {
+            // Metodo que calcula o dano recebido pelo personagem. Pode ou não diminuir o dano pela metade caso o modo de defesa esteja ativado
+            if (this.estaDefendendo)
+            {
+                Console.WriteLine(this.Nome + " estava defendendo e absorveu metade do dano\n");
+                danoBruto /= 2;
+                this.estaDefendendo = false;
+            }
+
+            this.Vida -= Convert.ToInt32(danoBruto); // Converte o dano para int e reduz a vida do alvo
+
+            if (this.Vida <= 0)
+            {
+                Console.WriteLine(this.Nome + " foi derrotado." + "\n");
+            }
+            else
+            {
+                Console.WriteLine("A vida de " + this.Nome + " agora é " + this.Vida + "\n");
+            }
+        }
 
         // Construtor
         public Personagem(string nome, int vida, double forca, ClassePersonagem classe)
