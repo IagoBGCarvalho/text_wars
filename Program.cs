@@ -30,69 +30,136 @@ namespace text_wars
                 foreach (Personagem personagem in personagens)
                 {
                     // Loop for que, para cada objeto personagem do tipo Personagem na lista personagens, exibe seu nome, classe, vida e força
-                    Console.WriteLine(personagem.Nome + " é da classe " + personagem.Classe + ". " + "Vida: " + personagem.Vida + ", " + "e força: " + personagem.Forca);
+                    Console.WriteLine(personagem.Nome + " é da classe " + personagem.Classe + ". " + "Vida: " + personagem.Vida + ", " + "força: " + personagem.Forca + " e agilidade: " + personagem.Agilidade);
                 }
 
                 Console.WriteLine("\n");
                 Console.WriteLine("---A batalha começou!---\n");
 
-                while (p1.Vida > 0 && p2.Vida > 0)
+                if (p1.Agilidade > p2.Agilidade)
                 {
-                    // Game loop da batalha de turnos
-                    // Logica:
-                    // 1 - Verificar condição de vitória - Enquanto todos os jogadores estiverem vivos
-                    // 2 - Turno do jogador 1
-                    // 3 - Verificar condição
-                    // 4 - Turno do jogador 2
-                    // 5 - Verificar condição
-                    // 6 - Volta para o passo 1
+                    Console.WriteLine("Por ter mais agilidade, " + p1.Nome + " começa.\n");
+                    while (p1.Vida > 0 && p2.Vida > 0)
+                    {
+                        // Game loop da batalha de turnos
+                        // Logica:
+                        // 1 - Verificar condição de vitória - Enquanto todos os jogadores estiverem vivos
+                        // 2 - Turno do jogador 1
+                        // 3 - Verificar condição
+                        // 4 - Turno do jogador 2
+                        // 5 - Verificar condição
+                        // 6 - Volta para o passo 1
 
-                    // Turno do jogador 1
-                    Console.WriteLine("---Turno de " + p1.Nome + "---");
-                    Console.WriteLine("Digite a ação desejada: (A) - Atacar (D) - Defender (P) - Passar");
-                    decisao = Console.ReadLine() ?? ""; // O operador de coalescência evita que a string decisão (que não pode ser nula) receba um valor nulo, retornando uma string vazia caso isso aconteça
+                        // Turno do jogador 1
+                        Console.WriteLine("---Turno de " + p1.Nome + "---");
+                        Console.WriteLine("Digite a ação desejada: (A) - Atacar (D) - Defender (P) - Passar");
+                        decisao = Console.ReadLine() ?? ""; // O operador de coalescência evita que a string decisão (que não pode ser nula) receba um valor nulo, retornando uma string vazia caso isso aconteça
 
-                    if (decisao == "A")
-                    {
-                        p1.atacar(p2);
-                    }
-                    else if (decisao == "D")
-                    {
-                        p1.Defender();
-                    }
-                    else
-                    {
-                        Console.WriteLine("O jogador " + p1.Nome + " passou a vez.\n");
-                    }
+                        if (decisao == "A")
+                        {
+                            p1.atacar(p2);
+                        }
+                        else if (decisao == "D")
+                        {
+                            p1.Defender();
+                        }
+                        else
+                        {
+                            Console.WriteLine("O jogador " + p1.Nome + " passou a vez.\n");
+                        }
 
-                    // Verificacao
-                    if (p2.Vida <= 0)
-                    {
-                        break;
-                    }
+                        // Verificacao
+                        if (p2.Vida <= 0)
+                        {
+                            break;
+                        }
 
-                    // Turno do jogador 2
-                    Console.WriteLine("---Turno de " + p2.Nome + "---");
-                    Console.WriteLine("Digite a ação desejada: (A) - Atacar (D) - Defender (P) - Passar");
-                    decisao = Console.ReadLine() ?? "";
+                        // Turno do jogador 2
+                        Console.WriteLine("---Turno de " + p2.Nome + "---");
+                        Console.WriteLine("Digite a ação desejada: (A) - Atacar (D) - Defender (P) - Passar");
+                        decisao = Console.ReadLine() ?? "";
 
-                    if (decisao == "A")
-                    {
-                        p2.atacar(p1);
+                        if (decisao == "A")
+                        {
+                            p2.atacar(p1);
+                        }
+                        else if (decisao == "D")
+                        {
+                            p2.Defender();
+                        }
+                        else
+                        {
+                            Console.WriteLine("O jogador " + p2.Nome + " passou a vez.\n");
+                        }
+                        // Verificacao
+                        if (p1.Vida <= 0)
+                        {
+                            break;
+                        }
                     }
-                    else if (decisao == "D")
-                    {
-                        p2.Defender();
-                    }
-                    else
-                    {
-                        Console.WriteLine("O jogador " + p2.Nome + " passou a vez.\n");
-                    }
+                }
+                else
+                {
+                    Console.WriteLine("Por ter mais agilidade, " + p2.Nome + " começa.\n");
 
-                    // Verificacao
-                    if (p1.Vida <= 0)
+                    while (p1.Vida > 0 && p2.Vida > 0)
                     {
-                        break;
+                        // Game loop da batalha de turnos
+                        // Logica:
+                        // 1 - Verificar condição de vitória - Enquanto todos os jogadores estiverem vivos
+                        // 2 - Turno do jogador 1
+                        // 3 - Verificar condição
+                        // 4 - Turno do jogador 2
+                        // 5 - Verificar condição
+                        // 6 - Volta para o passo 1
+
+                        // Turno do jogador 1
+                        Console.WriteLine("---Turno de " + p2.Nome + "---");
+                        Console.WriteLine("Digite a ação desejada: (A) - Atacar (D) - Defender (P) - Passar");
+                        decisao = Console.ReadLine() ?? ""; // O operador de coalescência evita que a string decisão (que não pode ser nula) receba um valor nulo, retornando uma string vazia caso isso aconteça
+
+                        if (decisao == "A")
+                        {
+                            p2.atacar(p1);
+                        }
+                        else if (decisao == "D")
+                        {
+                            p2.Defender();
+                        }
+                        else
+                        {
+                            Console.WriteLine("O jogador " + p2.Nome + " passou a vez.\n");
+                        }
+
+                        // Verificacao
+                        if (p1.Vida <= 0)
+                        {
+                            break;
+                        }
+
+                        // Turno do jogador 2
+                        Console.WriteLine("---Turno de " + p1.Nome + "---");
+                        Console.WriteLine("Digite a ação desejada: (A) - Atacar (D) - Defender (P) - Passar");
+                        decisao = Console.ReadLine() ?? "";
+
+                        if (decisao == "A")
+                        {
+                            p1.atacar(p2);
+                        }
+                        else if (decisao == "D")
+                        {
+                            p1.Defender();
+                        }
+                        else
+                        {
+                            Console.WriteLine("O jogador " + p1.Nome + " passou a vez.\n");
+                        }
+
+                        // Verificacao
+                        if (p2.Vida <= 0)
+                        {
+                            break;
+                        }
                     }
                 }
 

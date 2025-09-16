@@ -6,6 +6,7 @@ namespace text_wars
         private string nome = "";
         private int vida;
         public double forca { get; set; }
+        private double agilidade;
 
         public ClassePersonagem Classe { get; private set; } // Propriedade referente a escolha de classe, o set é private pois a classe não pode ser alterada depois de escolhida
         public static int ContagemJogadores { get; private set; }
@@ -66,6 +67,24 @@ namespace text_wars
             }
         }
 
+        public double Agilidade
+        {
+            get
+            {
+                return agilidade;
+
+            }
+            set
+            {
+                if (value < 0)
+                {
+                    return;
+                }
+
+                agilidade = value;
+            }
+        }
+
         // Métodos
         public abstract void atacar(Personagem alvo);
 
@@ -99,7 +118,7 @@ namespace text_wars
         }
 
         // Construtor
-        public Personagem(string nome, int vida, double forca, ClassePersonagem classe)
+        public Personagem(string nome, int vida, double forca, double agilidade, ClassePersonagem classe)
         {
             // Validação do nome
             if (string.IsNullOrEmpty(nome))
@@ -119,9 +138,16 @@ namespace text_wars
                 throw new ArgumentException("A força do personagem não pode ser menor ou igual a 0.", nameof(forca));
             }
 
+            // Validacao da força
+            if (agilidade <= 0)
+            {
+                throw new ArgumentException("A agilidade do personagem não pode ser menor ou igual a 0.", nameof(forca));
+            }
+
             this.Nome = nome;
             this.Vida = vida;
             this.Forca = forca;
+            this.Agilidade = agilidade;
             this.Classe = classe;
 
             ContagemJogadores++;

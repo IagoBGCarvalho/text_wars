@@ -13,7 +13,7 @@ namespace text_wars
 
         }
         // Construtor
-        public Guerreiro(string nome) : base(nome, 100, 35, ClassePersonagem.Guerreiro)
+        public Guerreiro(string nome) : base(nome, 100, 35, 30, ClassePersonagem.Guerreiro)
         {
             // O guerreiro recebe o nome do personagem, mas recebe 120 de vida e 15 de dano.
 

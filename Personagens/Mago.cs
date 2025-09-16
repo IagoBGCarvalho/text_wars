@@ -13,7 +13,7 @@ namespace text_wars
         }
         
         // Construtor
-        public Mago(string nome) : base(nome, 80, 20, ClassePersonagem.Mago)
+        public Mago(string nome) : base(nome, 80, 20, 50, ClassePersonagem.Mago)
         {
             // O mago recebe o nome do personagem, mas recebe 120 de vida e 15 de dano.
 
