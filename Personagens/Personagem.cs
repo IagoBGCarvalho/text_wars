@@ -26,7 +26,6 @@ namespace text_wars
                 {
                     return;
                 }
-
                 nome = value;
             }
         }
@@ -36,7 +35,6 @@ namespace text_wars
             get
             {
                 return forca;
-
             }
             set
             {
@@ -44,7 +42,6 @@ namespace text_wars
                 {
                     return;
                 }
-
                 forca = value;
             }
         }
@@ -54,15 +51,13 @@ namespace text_wars
             get
             {
                 return vida;
-
             }
             set
             {
                 if (value < 0)
                 {
-                    return;
+                    vida = 0; // Caso a vida seja menor do que 0, significa que o jogador morreu
                 }
-
                 vida = Convert.ToInt32(value);
             }
         }
@@ -111,7 +106,7 @@ namespace text_wars
                 this.estaDefendendo = false;
             }
 
-            this.Vida -= Convert.ToInt32(danoBruto); // Converte o dano para int e reduz a vida do alvo
+            this.Vida -= danoBruto; // Converte o dano para int e reduz a vida do alvo
 
             if (this.Vida <= 0)
             {
