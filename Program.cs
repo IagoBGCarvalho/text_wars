@@ -19,10 +19,11 @@ namespace text_wars
             {
                 List<Personagem> personagens = new List<Personagem>(); // List gera uma lista dinâmica onde é possível adicionar, remover e iterar. Apenas guarda objetos do tipo Personagem ou derivados dele (mago, guerreiro...)
 
-                Guerreiro p1 = new Guerreiro("Kratos");
-                personagens.Add(p1); // Adiciona p1 na lista dinâmica
+                // Criação de personagens:
+                Personagem p1 = CriarPersonagem(1); // Chama o método de criação de personagens, envolvendo a atribuição do nome e da classe do personagem
+                personagens.Add(p1);
 
-                Mago p2 = new Mago("Patolino");
+                Personagem p2 = CriarPersonagem(2);
                 personagens.Add(p2);
 
                 Console.WriteLine("---Apresentação de personagens---\n");
@@ -37,7 +38,7 @@ namespace text_wars
                 Console.WriteLine("---A batalha começou!---\n");
 
                 Personagem atacanteAtual; // Variáveis que representam o papel de cada jogador no método atacar
-                Personagem defensorAtual; 
+                Personagem defensorAtual;
 
                 if (p1.Agilidade > p2.Agilidade)
                 {
@@ -118,6 +119,49 @@ namespace text_wars
             catch (ArgumentException ex)
             {
                 Console.WriteLine(ex.Message);
+            }
+        }
+        private static Personagem CriarPersonagem(int numeroJogador)
+        {
+            Console.WriteLine($"\n--- Criação do jogador {numeroJogador} ---");
+
+            // Nome:
+            string nome = "";
+            while (string.IsNullOrEmpty(nome))
+            {
+                // Loop de validação que não se encerra enquanto usuário não escrever algum caractere para o nome
+                Console.WriteLine("Qual será o nome do personagem?");
+                nome = Console.ReadLine() ?? "";
+                Console.WriteLine();
+
+                if (string.IsNullOrEmpty(nome))
+                {
+                    Console.WriteLine("O nome não pode ser vazio. Tente novamente.\n");
+                }
+            }
+
+            // Classe:
+            string classe = "";
+            while (classe != "G" && classe != "M")
+            {
+                Console.WriteLine($"Qual a classe de {nome}? Digite <G> para Guerreiro e <M> para Mago:");
+                classe = (Console.ReadLine() ?? "").ToUpper();
+                Console.WriteLine();
+
+                if (classe != "G" && classe != "M")
+                {
+                    Console.WriteLine("Classe inválida. Por favor, digite G ou M.");
+                }
+            }
+
+            // Instanciação:
+            if (classe == "G")
+            {
+                return new Guerreiro(nome);
+            }
+            else // Será alterado futuramente com a adição de novas classes
+            {
+                return new Mago(nome);
             }
         }
     }
