@@ -5,7 +5,7 @@ namespace text_wars
         // Atributos
         private string nome = "";
         private int vida;
-        public double forca { get; set; }
+        private double forca;
         private double agilidade;
 
         public ClassePersonagem Classe { get; private set; } // Propriedade referente a escolha de classe, o set é private pois a classe não pode ser alterada depois de escolhida
@@ -86,7 +86,13 @@ namespace text_wars
         }
 
         // Métodos
-        public abstract void atacar(Personagem alvo);
+        public virtual void atacar(Personagem alvo)
+        {
+            // Virtual está aplicando um método padrão que PODE ser alterado por outras classes utilizando override
+            double dano = this.Forca;
+            Console.WriteLine(this.Nome + " ataca " + alvo.Nome + " com " + dano + " de força!" + "\n");
+            alvo.ReceberDano(dano);
+        }
 
         public void Defender()
         {
@@ -141,7 +147,7 @@ namespace text_wars
             // Validacao da força
             if (agilidade <= 0)
             {
-                throw new ArgumentException("A agilidade do personagem não pode ser menor ou igual a 0.", nameof(forca));
+                throw new ArgumentException("A agilidade do personagem não pode ser menor ou igual a 0.", nameof(agilidade));
             }
 
             this.Nome = nome;

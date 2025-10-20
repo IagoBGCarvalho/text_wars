@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.Data.Sqlite;
 using text_wars;
 
 namespace text_wars
@@ -37,131 +36,64 @@ namespace text_wars
                 Console.WriteLine("\n");
                 Console.WriteLine("---A batalha começou!---\n");
 
+                Personagem atacanteAtual; // Variáveis que representam o papel de cada jogador no método atacar
+                Personagem defensorAtual; 
+
                 if (p1.Agilidade > p2.Agilidade)
                 {
+                    // Condicionais que, com base na velocidade, determinam qual será o jogador que começará atacando
+                    atacanteAtual = p1;
+                    defensorAtual = p2;
                     Console.WriteLine("Por ter mais agilidade, " + p1.Nome + " começa.\n");
-                    while (p1.Vida > 0 && p2.Vida > 0)
-                    {
-                        // Game loop da batalha de turnos
-                        // Logica:
-                        // 1 - Verificar condição de vitória - Enquanto todos os jogadores estiverem vivos
-                        // 2 - Turno do jogador 1
-                        // 3 - Verificar condição
-                        // 4 - Turno do jogador 2
-                        // 5 - Verificar condição
-                        // 6 - Volta para o passo 1
-
-                        // Turno do jogador 1
-                        Console.WriteLine("---Turno de " + p1.Nome + "---");
-                        Console.WriteLine("Digite a ação desejada: (A) - Atacar (D) - Defender (P) - Passar");
-                        decisao = Console.ReadLine() ?? ""; // O operador de coalescência evita que a string decisão (que não pode ser nula) receba um valor nulo, retornando uma string vazia caso isso aconteça
-
-                        if (decisao == "A")
-                        {
-                            p1.atacar(p2);
-                        }
-                        else if (decisao == "D")
-                        {
-                            p1.Defender();
-                        }
-                        else
-                        {
-                            Console.WriteLine("O jogador " + p1.Nome + " passou a vez.\n");
-                        }
-
-                        // Verificacao
-                        if (p2.Vida <= 0)
-                        {
-                            break;
-                        }
-
-                        // Turno do jogador 2
-                        Console.WriteLine("---Turno de " + p2.Nome + "---");
-                        Console.WriteLine("Digite a ação desejada: (A) - Atacar (D) - Defender (P) - Passar");
-                        decisao = Console.ReadLine() ?? "";
-
-                        if (decisao == "A")
-                        {
-                            p2.atacar(p1);
-                        }
-                        else if (decisao == "D")
-                        {
-                            p2.Defender();
-                        }
-                        else
-                        {
-                            Console.WriteLine("O jogador " + p2.Nome + " passou a vez.\n");
-                        }
-                        // Verificacao
-                        if (p1.Vida <= 0)
-                        {
-                            break;
-                        }
-                    }
                 }
                 else
                 {
+                    atacanteAtual = p2;
+                    defensorAtual = p1;
                     Console.WriteLine("Por ter mais agilidade, " + p2.Nome + " começa.\n");
+                }
 
-                    while (p1.Vida > 0 && p2.Vida > 0)
+                while (p1.Vida > 0 && p2.Vida > 0)
+                {
+                    // Game loop da batalha de turnos
+                    // Logica:
+                    // 1 - Verificar condição de vitória - Enquanto todos os jogadores estiverem vivos
+                    // 2 - Turno do atacante atual
+                    // 3 - Verificar condição
+                    // 4 - Inversão de papéis (antigo defensor vira o atual atacante)
+                    // 5 - Verificar condição
+                    // 6 - Volta para o passo 1
+
+                    // Turno do atacante atual:
+                    Console.WriteLine("---Turno de " + atacanteAtual.Nome + "---");
+                    Console.WriteLine("Digite a ação desejada: (A) - Atacar (D) - Defender (P) - Passar");
+                    decisao = (Console.ReadLine() ?? "").ToUpper(); // O operador de coalescência evita que a string decisão (que não pode ser nula) receba um valor nulo, retornando uma string vazia caso isso aconteça
+
+                    if (decisao == "A")
                     {
-                        // Game loop da batalha de turnos
-                        // Logica:
-                        // 1 - Verificar condição de vitória - Enquanto todos os jogadores estiverem vivos
-                        // 2 - Turno do jogador 1
-                        // 3 - Verificar condição
-                        // 4 - Turno do jogador 2
-                        // 5 - Verificar condição
-                        // 6 - Volta para o passo 1
-
-                        // Turno do jogador 1
-                        Console.WriteLine("---Turno de " + p2.Nome + "---");
-                        Console.WriteLine("Digite a ação desejada: (A) - Atacar (D) - Defender (P) - Passar");
-                        decisao = Console.ReadLine() ?? ""; // O operador de coalescência evita que a string decisão (que não pode ser nula) receba um valor nulo, retornando uma string vazia caso isso aconteça
-
-                        if (decisao == "A")
-                        {
-                            p2.atacar(p1);
-                        }
-                        else if (decisao == "D")
-                        {
-                            p2.Defender();
-                        }
-                        else
-                        {
-                            Console.WriteLine("O jogador " + p2.Nome + " passou a vez.\n");
-                        }
-
-                        // Verificacao
-                        if (p1.Vida <= 0)
-                        {
-                            break;
-                        }
-
-                        // Turno do jogador 2
-                        Console.WriteLine("---Turno de " + p1.Nome + "---");
-                        Console.WriteLine("Digite a ação desejada: (A) - Atacar (D) - Defender (P) - Passar");
-                        decisao = Console.ReadLine() ?? "";
-
-                        if (decisao == "A")
-                        {
-                            p1.atacar(p2);
-                        }
-                        else if (decisao == "D")
-                        {
-                            p1.Defender();
-                        }
-                        else
-                        {
-                            Console.WriteLine("O jogador " + p1.Nome + " passou a vez.\n");
-                        }
-
-                        // Verificacao
-                        if (p2.Vida <= 0)
-                        {
-                            break;
-                        }
+                        atacanteAtual.atacar(defensorAtual);
                     }
+                    else if (decisao == "D")
+                    {
+                        atacanteAtual.Defender();
+                    }
+                    else
+                    {
+                        Console.WriteLine("O jogador " + atacanteAtual.Nome + " passou a vez.\n");
+                    }
+
+                    // Verificacão de vitória:
+                    if (defensorAtual.Vida <= 0)
+                    {
+                        break;
+                    }
+
+                    // Inversão de papéis(turno do jogador 2):
+                    Personagem temp = atacanteAtual;
+                    atacanteAtual = defensorAtual;
+                    defensorAtual = temp;
+
+                    // No próximo loop, caso o defensor não tenha morrido, receberá o papel de atacante (troca de turno)
                 }
 
                 // Declaração de vencedor
@@ -174,7 +106,7 @@ namespace text_wars
                 }
                 else if (p2.Vida <= 0)
                 {
-                    Console.WriteLine(p2.Nome + " venceu!!!");
+                    Console.WriteLine(p1.Nome + " venceu!!!");
                 }
                 else
                 {
