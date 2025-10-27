@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,30 +10,86 @@ namespace text_wars
 {
     internal class Program
     {
+        public static List<Jogador> jogadores = new List<Jogador>();
         static void Main(string[] args)
         {
             // Declaração de variáveis
-            string decisao = "";
+            string decisaoTurno = "";
+            string decisaoCriacaoJogador = "";
+            string decisaoCriacaoPersonagem = "";
+            Personagem p1;
+            Personagem p2;
+            Jogador jogadorSelecionado1;
+            Jogador jogadorSelecionado2;
 
             // Corpo
             try
             {
-                List<Personagem> personagens = new List<Personagem>(); // List gera uma lista dinâmica onde é possível adicionar, remover e iterar. Apenas guarda objetos do tipo Personagem ou derivados dele (mago, guerreiro...)
+                // Criação e seleção do jogador 1:
+                Console.WriteLine("(Jogador 1) Deseja (C)RIAR um novo jogador ou (E)NTRAR?:");
+                decisaoCriacaoJogador = (Console.ReadLine() ?? "").ToUpper();
 
-                // Criação de personagens:
-                Personagem p1 = CriarPersonagem(1); // Chama o método de criação de personagens, envolvendo a atribuição do nome e da classe do personagem
-                personagens.Add(p1);
+                if (decisaoCriacaoJogador == "C")
+                {
+                    jogadorSelecionado1 = CriarJogador(); 
+                }
+                else
+                {
+                    jogadorSelecionado1 = EscolherJogador();
+                }
 
-                Personagem p2 = CriarPersonagem(2);
-                personagens.Add(p2);
+                // Criação e seleção do jogador 2:
+                Console.WriteLine("\n(Jogador 2) Deseja (C)RIAR um novo jogador ou (E)NTRAR?:");
+                decisaoCriacaoJogador = (Console.ReadLine() ?? "").ToUpper();
+
+                if (decisaoCriacaoJogador == "C")
+                {
+                    jogadorSelecionado2 = CriarJogador();
+                }
+                else
+                {
+                    jogadorSelecionado2 = EscolherJogador();
+                }
+
+                Console.Clear(); // Limpa a tela de criação e seleção de jogadores
+
+                // Criação de personagem do jogador 1:
+                Console.WriteLine("(Jogador 1) Deseja (C)RIAR ou (S)ELECIONAR um personagem?");
+                decisaoCriacaoPersonagem = (Console.ReadLine() ?? "").ToUpper();
+
+                if (decisaoCriacaoPersonagem == "C")
+                {
+                    p1 = CriarPersonagem(jogadorSelecionado1);
+                }
+                else
+                {
+                    p1 = SelecionarPersonagem(jogadorSelecionado1);
+                }
+                Console.WriteLine($"Você selecionou: {p1.Nome} ({p1.Classe})\n");
+                
+                // Criação de personagem do jogador 2:
+                Console.WriteLine("(Jogador 2) Deseja (C)RIAR ou (S)ELECIONAR um personagem?");
+                decisaoCriacaoPersonagem = (Console.ReadLine() ?? "").ToUpper();
+
+                if (decisaoCriacaoPersonagem == "C")
+                {
+                    p2 = CriarPersonagem(jogadorSelecionado2);
+                }
+                else
+                {
+                    p2 = SelecionarPersonagem(jogadorSelecionado2);
+                }
+                Console.WriteLine($"Você selecionou: {p2.Nome} ({p2.Classe})\n");
+
+                Thread.Sleep(3000);
+                Console.Clear();
+                
 
                 Console.WriteLine("---Apresentação de personagens---\n");
 
-                foreach (Personagem personagem in personagens)
-                {
-                    // Loop for que, para cada objeto personagem do tipo Personagem na lista personagens, exibe seu nome, classe, vida e força
-                    Console.WriteLine(personagem.Nome + " é da classe " + personagem.Classe + ". " + "Vida: " + personagem.Vida + ", " + "força: " + personagem.Forca + " e agilidade: " + personagem.Agilidade);
-                }
+                Console.WriteLine($"{p1.Nome} ({p1.Classe}) | Vida: {p1.Vida} | Força: {p1.Forca} | Agilidade: {p1.Agilidade}");
+                Console.WriteLine($"{p2.Nome} ({p2.Classe}) | Vida: {p2.Vida} | Força: {p2.Forca} | Agilidade: {p2.Agilidade}");
+                
 
                 Console.WriteLine("\n");
                 Console.WriteLine("---A batalha começou!---\n");
@@ -68,13 +125,13 @@ namespace text_wars
                     // Turno do atacante atual:
                     Console.WriteLine("---Turno de " + atacanteAtual.Nome + "---");
                     Console.WriteLine("Digite a ação desejada: (A) - Atacar (D) - Defender (P) - Passar");
-                    decisao = (Console.ReadLine() ?? "").ToUpper(); // O operador de coalescência evita que a string decisão (que não pode ser nula) receba um valor nulo, retornando uma string vazia caso isso aconteça
+                    decisaoTurno = (Console.ReadLine() ?? "").ToUpper(); // O operador de coalescência evita que a string decisão (que não pode ser nula) receba um valor nulo, retornando uma string vazia caso isso aconteça
 
-                    if (decisao == "A")
+                    if (decisaoTurno == "A")
                     {
                         atacanteAtual.atacar(defensorAtual);
                     }
-                    else if (decisao == "D")
+                    else if (decisaoTurno == "D")
                     {
                         atacanteAtual.Defender();
                     }
@@ -121,10 +178,9 @@ namespace text_wars
                 Console.WriteLine(ex.Message);
             }
         }
-        private static Personagem CriarPersonagem(int numeroJogador)
+        private static Personagem CriarPersonagem(Jogador jogador)
         {
-            Console.WriteLine($"\n--- Criação do jogador {numeroJogador} ---");
-
+            /// Função responsável por criar o personagem para o jogador que a chamou
             // Nome:
             string nome = "";
             while (string.IsNullOrEmpty(nome))
@@ -157,11 +213,150 @@ namespace text_wars
             // Instanciação:
             if (classe == "G")
             {
-                return new Guerreiro(nome);
+                var novoPersonagem = new Guerreiro(nome);
+                jogador.PersonagensJogador.Add(novoPersonagem);
+                return novoPersonagem;
             }
             else // Será alterado futuramente com a adição de novas classes
             {
-                return new Mago(nome);
+                var novoPersonagem = new Mago(nome);
+                jogador.PersonagensJogador.Add(novoPersonagem);
+                return novoPersonagem;
+            }
+        }
+
+        private static Personagem SelecionarPersonagem(Jogador jogador)
+        {
+            /// Função que seleciona um dos N personagens do jogador
+            if (jogador.PersonagensJogador.Count == 0)
+            {
+                // Se o jogador não tem personagens, força a criação de um
+                Console.WriteLine("Você ainda não tem personagens. Vamos criar o primeiro!");
+                return CriarPersonagem(jogador);
+            }
+
+            Console.WriteLine("Escolha um dos seus personagens:");
+
+            while (true)
+            {
+                for (int i = 0; i < jogador.PersonagensJogador.Count; i++)
+                {
+                    // Lista todos os personagens do jogador
+                    var p = jogador.PersonagensJogador[i];
+                    Console.WriteLine($"<{i + 1}> - {p.Nome} ({p.Classe})");
+                }
+
+                Console.WriteLine("Digite o número do personagem:");
+                string input = Console.ReadLine();
+
+                if (int.TryParse(input, out int indiceSelecionado)) // Converte o texto para um número
+                {
+                    int indiceReal = indiceSelecionado - 1; // Converte (1, 2, 3) para (0, 1, 2)
+
+                    if (indiceReal >= 0 && indiceReal < jogador.PersonagensJogador.Count)
+                    {
+                        return jogador.PersonagensJogador[indiceReal]; // Retorna o personagem criado
+                    }
+                }
+                Console.WriteLine("Seleção inválida. Tente novamente.");
+            }
+        }
+
+        private static Jogador CriarJogador()
+        {
+            /// Função que cria um jogador e o adiciona na lista de jogadores
+            string login;
+            string senha;
+            string senha_confirmacao;
+
+            Console.WriteLine($"\n--- Criação de jogador ---\n");
+
+            Console.WriteLine("Digite qual será o seu nome de usuário:");
+            login = Console.ReadLine() ?? "";
+
+            while (true)
+            {
+                Console.WriteLine("Digite a sua senha:");
+                senha = Console.ReadLine() ?? "";
+
+                Console.WriteLine("Digite a senha novamente:");
+                senha_confirmacao = Console.ReadLine() ?? "";
+
+                if (senha == senha_confirmacao)
+                {
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("Senha repetida incorretamente, tente novamente.\n");
+                }
+            }
+
+            var novo_jogador = new Jogador(login, senha);
+            jogadores.Add(novo_jogador);
+
+            return novo_jogador;
+        }
+        
+        private static Jogador EscolherJogador()
+        {
+            // Função que faz o login do jogador no sistema
+            while (true)
+            {
+                string loginBuscado = "";
+                Jogador jogadorEncontrado = null;
+
+                // Obter e validar login:
+                while (string.IsNullOrEmpty(loginBuscado))
+                {
+                    Console.WriteLine("Digite o seu login:");
+                    loginBuscado = Console.ReadLine() ?? "";
+
+                    if (string.IsNullOrEmpty(loginBuscado))
+                    {
+                        Console.WriteLine("O login não pode ser vazio. Tente novamente.\n");
+                    }
+                }
+
+                // Procurar o jogador na lista:
+                foreach (var jogador in jogadores)
+                {
+                    // Procura na lista de jogadores se existe algum objeto jogador com login igual ao fornecido
+                    if (jogador.Login == loginBuscado)
+                    {
+                        jogadorEncontrado = jogador;
+                        break;
+                    }
+                }
+
+                // Verificar se o jogador foi encontrado e realizar a autenticação:
+                if (jogadorEncontrado != null)
+                {
+                    // Caso entre aqui, significa que o login do jogador foi encontrado
+                    Console.WriteLine($"Digite a senha para {jogadorEncontrado.Login}:");
+
+                    while (true)
+                    {
+                        // Loop para autenticação
+                        string senhaInserida = Console.ReadLine() ?? "";
+
+                        if (senhaInserida == jogadorEncontrado.Senha)
+                        {
+                            // Significa que a senha está correta e a autenticação foi concluída com sucesso:
+                            Console.WriteLine("Login efetuado com sucesso!");
+                            return jogadorEncontrado;
+                        }
+                        else
+                        {
+                            Console.WriteLine("Senha incorreta. Tenta novamente.");
+                        }
+                    }
+                }
+                else
+                {
+                    Console.WriteLine($"O jogador {loginBuscado} não foi encontrado. Tente novamente.");
+                    // Como o while true é infinito, só irá parar quando o login for efetuado corretamente.
+                }
             }
         }
     }

@@ -2,7 +2,7 @@
 
 namespace text_wars;
 
-public class BancoDeDados
+public class JogadorContexto
 {
     private string _stringDeConexao = "Data source=TextWars.db";
 
@@ -28,9 +28,8 @@ public class BancoDeDados
     }
 
     // Construtor
-    public BancoDeDados()
+    public JogadorContexto()
     {
 
     }
-
 }
