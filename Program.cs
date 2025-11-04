@@ -14,6 +14,7 @@ namespace text_wars
         static void Main(string[] args)
         {
             // Declaração de variáveis
+            
             string decisaoTurno = "";
             string decisaoCriacaoJogador = "";
             string decisaoCriacaoPersonagem = "";
@@ -25,153 +26,171 @@ namespace text_wars
             // Corpo
             try
             {
-                // Criação e seleção do jogador 1:
-                Console.WriteLine("(Jogador 1) Deseja (C)RIAR um novo jogador ou (E)NTRAR?:");
-                decisaoCriacaoJogador = (Console.ReadLine() ?? "").ToUpper();
-
-                if (decisaoCriacaoJogador == "C")
+                while (true)
                 {
-                    jogadorSelecionado1 = CriarJogador(); 
-                }
-                else
-                {
-                    jogadorSelecionado1 = EscolherJogador();
-                }
+                    // Criação e seleção do jogador 1:
+                    Console.WriteLine("\n(Jogador 1) Deseja (C)RIAR um novo jogador ou (E)NTRAR?:");
+                    decisaoCriacaoJogador = (Console.ReadLine() ?? "").ToUpper();
 
-                // Criação e seleção do jogador 2:
-                Console.WriteLine("\n(Jogador 2) Deseja (C)RIAR um novo jogador ou (E)NTRAR?:");
-                decisaoCriacaoJogador = (Console.ReadLine() ?? "").ToUpper();
-
-                if (decisaoCriacaoJogador == "C")
-                {
-                    jogadorSelecionado2 = CriarJogador();
-                }
-                else
-                {
-                    jogadorSelecionado2 = EscolherJogador();
-                }
-
-                Console.Clear(); // Limpa a tela de criação e seleção de jogadores
-
-                // Criação de personagem do jogador 1:
-                Console.WriteLine("(Jogador 1) Deseja (C)RIAR ou (S)ELECIONAR um personagem?");
-                decisaoCriacaoPersonagem = (Console.ReadLine() ?? "").ToUpper();
-
-                if (decisaoCriacaoPersonagem == "C")
-                {
-                    p1 = CriarPersonagem(jogadorSelecionado1);
-                }
-                else
-                {
-                    p1 = SelecionarPersonagem(jogadorSelecionado1);
-                }
-                Console.WriteLine($"Você selecionou: {p1.Nome} ({p1.Classe})\n");
-                
-                // Criação de personagem do jogador 2:
-                Console.WriteLine("(Jogador 2) Deseja (C)RIAR ou (S)ELECIONAR um personagem?");
-                decisaoCriacaoPersonagem = (Console.ReadLine() ?? "").ToUpper();
-
-                if (decisaoCriacaoPersonagem == "C")
-                {
-                    p2 = CriarPersonagem(jogadorSelecionado2);
-                }
-                else
-                {
-                    p2 = SelecionarPersonagem(jogadorSelecionado2);
-                }
-                Console.WriteLine($"Você selecionou: {p2.Nome} ({p2.Classe})\n");
-
-                Thread.Sleep(3000);
-                Console.Clear();
-                
-
-                Console.WriteLine("---Apresentação de personagens---\n");
-
-                Console.WriteLine($"{p1.Nome} ({p1.Classe}) | Vida: {p1.Vida} | Força: {p1.Forca} | Agilidade: {p1.Agilidade}");
-                Console.WriteLine($"{p2.Nome} ({p2.Classe}) | Vida: {p2.Vida} | Força: {p2.Forca} | Agilidade: {p2.Agilidade}");
-                
-
-                Console.WriteLine("\n");
-                Console.WriteLine("---A batalha começou!---\n");
-
-                Personagem atacanteAtual; // Variáveis que representam o papel de cada jogador no método atacar
-                Personagem defensorAtual;
-
-                if (p1.Agilidade > p2.Agilidade)
-                {
-                    // Condicionais que, com base na velocidade, determinam qual será o jogador que começará atacando
-                    atacanteAtual = p1;
-                    defensorAtual = p2;
-                    Console.WriteLine("Por ter mais agilidade, " + p1.Nome + " começa.\n");
-                }
-                else
-                {
-                    atacanteAtual = p2;
-                    defensorAtual = p1;
-                    Console.WriteLine("Por ter mais agilidade, " + p2.Nome + " começa.\n");
-                }
-
-                while (p1.Vida > 0 && p2.Vida > 0)
-                {
-                    // Game loop da batalha de turnos
-                    // Logica:
-                    // 1 - Verificar condição de vitória - Enquanto todos os jogadores estiverem vivos
-                    // 2 - Turno do atacante atual
-                    // 3 - Verificar condição
-                    // 4 - Inversão de papéis (antigo defensor vira o atual atacante)
-                    // 5 - Verificar condição
-                    // 6 - Volta para o passo 1
-
-                    // Turno do atacante atual:
-                    Console.WriteLine("---Turno de " + atacanteAtual.Nome + "---");
-                    Console.WriteLine("Digite a ação desejada: (A) - Atacar (D) - Defender (P) - Passar");
-                    decisaoTurno = (Console.ReadLine() ?? "").ToUpper(); // O operador de coalescência evita que a string decisão (que não pode ser nula) receba um valor nulo, retornando uma string vazia caso isso aconteça
-
-                    if (decisaoTurno == "A")
+                    if (decisaoCriacaoJogador == "C")
                     {
-                        atacanteAtual.atacar(defensorAtual);
-                    }
-                    else if (decisaoTurno == "D")
-                    {
-                        atacanteAtual.Defender();
+                        jogadorSelecionado1 = CriarJogador();
                     }
                     else
                     {
-                        Console.WriteLine("O jogador " + atacanteAtual.Nome + " passou a vez.\n");
+                        jogadorSelecionado1 = EscolherJogador();
                     }
 
-                    // Verificacão de vitória:
-                    if (defensorAtual.Vida <= 0)
+                    // Criação e seleção do jogador 2:
+                    Console.WriteLine("\n(Jogador 2) Deseja (C)RIAR um novo jogador ou (E)NTRAR?:");
+                    decisaoCriacaoJogador = (Console.ReadLine() ?? "").ToUpper();
+
+                    if (decisaoCriacaoJogador == "C")
                     {
-                        break;
+                        jogadorSelecionado2 = CriarJogador();
+                    }
+                    else
+                    {
+                        jogadorSelecionado2 = EscolherJogador();
                     }
 
-                    // Inversão de papéis(turno do jogador 2):
-                    Personagem temp = atacanteAtual;
-                    atacanteAtual = defensorAtual;
-                    defensorAtual = temp;
+                    Console.Clear(); // Limpa a tela de criação e seleção de jogadores
 
-                    // No próximo loop, caso o defensor não tenha morrido, receberá o papel de atacante (troca de turno)
+                    // Criação de personagem do jogador 1:
+                    Console.WriteLine("(Jogador 1) Deseja (C)RIAR ou (S)ELECIONAR um personagem?");
+                    decisaoCriacaoPersonagem = (Console.ReadLine() ?? "").ToUpper();
+
+                    if (decisaoCriacaoPersonagem == "C")
+                    {
+                        p1 = CriarPersonagem(jogadorSelecionado1);
+                    }
+                    else
+                    {
+                        p1 = SelecionarPersonagem(jogadorSelecionado1);
+                    }
+                    Console.WriteLine($"Você selecionou: {p1.Nome} ({p1.Classe})\n");
+
+                    // Criação de personagem do jogador 2:
+                    Console.WriteLine("(Jogador 2) Deseja (C)RIAR ou (S)ELECIONAR um personagem?");
+                    decisaoCriacaoPersonagem = (Console.ReadLine() ?? "").ToUpper();
+
+                    if (decisaoCriacaoPersonagem == "C")
+                    {
+                        p2 = CriarPersonagem(jogadorSelecionado2);
+                    }
+                    else
+                    {
+                        p2 = SelecionarPersonagem(jogadorSelecionado2);
+                    }
+                    Console.WriteLine($"Você selecionou: {p2.Nome} ({p2.Classe})\n");
+
+                    Thread.Sleep(3000);
+                    Console.Clear();
+
+
+                    Console.WriteLine("---Apresentação de personagens---\n");
+
+                    Console.WriteLine($"{p1.Nome} ({p1.Classe}) | Vida: {p1.Vida} | Força: {p1.Forca} | Agilidade: {p1.Agilidade}");
+                    Console.WriteLine($"{p2.Nome} ({p2.Classe}) | Vida: {p2.Vida} | Força: {p2.Forca} | Agilidade: {p2.Agilidade}");
+
+
+                    Console.WriteLine("\n");
+                    Console.WriteLine("---A batalha começou!---\n");
+
+                    Personagem atacanteAtual; // Variáveis que representam o papel de cada jogador no método atacar
+                    Personagem defensorAtual;
+
+                    if (p1.Agilidade > p2.Agilidade)
+                    {
+                        // Condicionais que, com base na velocidade, determinam qual será o jogador que começará atacando
+                        atacanteAtual = p1;
+                        defensorAtual = p2;
+                        Console.WriteLine("Por ter mais agilidade, " + p1.Nome + " começa.\n");
+                    }
+                    else
+                    {
+                        atacanteAtual = p2;
+                        defensorAtual = p1;
+                        Console.WriteLine("Por ter mais agilidade, " + p2.Nome + " começa.\n");
+                    }
+
+                    while (p1.Vida > 0 && p2.Vida > 0)
+                    {
+                        // Game loop da batalha de turnos
+                        // Logica:
+                        // 1 - Verificar condição de vitória - Enquanto todos os jogadores estiverem vivos
+                        // 2 - Turno do atacante atual
+                        // 3 - Verificar condição
+                        // 4 - Inversão de papéis (antigo defensor vira o atual atacante)
+                        // 5 - Verificar condição
+                        // 6 - Volta para o passo 1
+
+                        // Turno do atacante atual:
+                        Console.WriteLine("---Turno de " + atacanteAtual.Nome + "---");
+                        Console.WriteLine("Digite a ação desejada: (A) - Atacar (D) - Defender (P) - Passar");
+                        decisaoTurno = (Console.ReadLine() ?? "").ToUpper(); // O operador de coalescência evita que a string decisão (que não pode ser nula) receba um valor nulo, retornando uma string vazia caso isso aconteça
+
+                        if (decisaoTurno == "A")
+                        {
+                            atacanteAtual.atacar(defensorAtual);
+                        }
+                        else if (decisaoTurno == "D")
+                        {
+                            atacanteAtual.Defender();
+                        }
+                        else
+                        {
+                            Console.WriteLine($"{atacanteAtual.Nome} passou a vez.\n");
+                        }
+
+                        // Verificacão de vitória:
+                        if (defensorAtual.Vida <= 0)
+                        {
+                            break;
+                        }
+
+                        // Inversão de papéis(turno do jogador 2):
+                        Personagem temp = atacanteAtual;
+                        atacanteAtual = defensorAtual;
+                        defensorAtual = temp;
+
+                        // No próximo loop, caso o defensor não tenha morrido, receberá o papel de atacante (troca de turno)
+                    }
+
+                    // Declaração de vencedor
+                    Console.WriteLine("---Fim da batalha!---");
+                    Console.WriteLine("\n");
+
+                    if (p1.Vida <= 0)
+                    {
+                        Console.WriteLine(p2.Nome + " venceu!!!");
+                    }
+                    else if (p2.Vida <= 0)
+                    {
+                        Console.WriteLine(p1.Nome + " venceu!!!");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Empatou");
+                    }
+
+                    string decisaoLoopJogo = "";
+
+                    while (String.IsNullOrEmpty(decisaoLoopJogo))
+                    {
+                        Console.WriteLine("\nDeseja jogar mais uma vez? Digite 'S' para SIM e 'N' para NÃO:");
+                        decisaoLoopJogo = (Console.ReadLine() ?? "").ToUpper();
+
+                        if (String.IsNullOrEmpty(decisaoLoopJogo))
+                        {
+                            Console.WriteLine("Digite um valor válido.\n");
+                        }
+                    }
+
+                    if (decisaoLoopJogo == "N") { break; }
                 }
 
-                // Declaração de vencedor
-                Console.WriteLine("---Fim da batalha!---");
-                Console.WriteLine("\n");
-
-                if (p1.Vida <= 0)
-                {
-                    Console.WriteLine(p2.Nome + " venceu!!!");
-                }
-                else if (p2.Vida <= 0)
-                {
-                    Console.WriteLine(p1.Nome + " venceu!!!");
-                }
-                else
-                {
-                    Console.WriteLine("Empatou");
-                }
-
-                Console.WriteLine("Contagem de jogadores: " + Personagem.ContagemJogadores);
+                Console.WriteLine("Obrigado por jogar!!!");
             }
             catch (ArgumentException ex)
             {
@@ -247,7 +266,7 @@ namespace text_wars
                 }
 
                 Console.WriteLine("Digite o número do personagem:");
-                string input = Console.ReadLine();
+                string input = Console.ReadLine() ?? "";
 
                 if (int.TryParse(input, out int indiceSelecionado)) // Converte o texto para um número
                 {
@@ -304,7 +323,7 @@ namespace text_wars
             while (true)
             {
                 string loginBuscado = "";
-                Jogador jogadorEncontrado = null;
+                Jogador? jogadorEncontrado = null;
 
                 // Obter e validar login:
                 while (string.IsNullOrEmpty(loginBuscado))

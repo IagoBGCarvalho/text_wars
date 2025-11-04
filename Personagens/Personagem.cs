@@ -9,7 +9,6 @@ namespace text_wars
         private double agilidade;
 
         public ClassePersonagem Classe { get; private set; } // Propriedade referente a escolha de classe, o set é private pois a classe não pode ser alterada depois de escolhida
-        public static int ContagemJogadores { get; private set; }
 
         private bool estaDefendendo = false; // Flag para sinalizar se o personagem está em modo de defesa
 
@@ -151,7 +150,6 @@ namespace text_wars
             this.Agilidade = agilidade;
             this.Classe = classe;
 
-            ContagemJogadores++;
         }
     }
 
