@@ -67,7 +67,11 @@ namespace text_wars
                     else
                     {
                         p1 = SelecionarPersonagem(jogadorSelecionado1);
-                        p1.ResetarParaBatalha();
+                        if (p1.Vida <= 0)
+                        {
+                            Console.WriteLine($"\n{p1.Nome} estava derrotado e precisou ser revivido para batalhar.");
+                            p1.ResetarParaBatalha();
+                        }
                     }
                     Console.WriteLine($"Você selecionou: {p1.Nome} ({p1.Classe})\n");
 
@@ -82,7 +86,11 @@ namespace text_wars
                     else
                     {
                         p2 = SelecionarPersonagem(jogadorSelecionado2);
-                        p2.ResetarParaBatalha();
+                        if (p2.Vida <= 0)
+                        {
+                            Console.WriteLine($"\n{p2.Nome} estava derrotado e precisou ser revivido para batalhar.");
+                            p2.ResetarParaBatalha();
+                        }
                     }
                     Console.WriteLine($"Você selecionou: {p2.Nome} ({p2.Classe})\n");
 
