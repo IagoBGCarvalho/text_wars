@@ -67,6 +67,7 @@ namespace text_wars
                     else
                     {
                         p1 = SelecionarPersonagem(jogadorSelecionado1);
+                        p1.ResetarParaBatalha();
                     }
                     Console.WriteLine($"Você selecionou: {p1.Nome} ({p1.Classe})\n");
 
@@ -81,10 +82,11 @@ namespace text_wars
                     else
                     {
                         p2 = SelecionarPersonagem(jogadorSelecionado2);
+                        p2.ResetarParaBatalha();
                     }
                     Console.WriteLine($"Você selecionou: {p2.Nome} ({p2.Classe})\n");
 
-                    Thread.Sleep(3000);
+                    Thread.Sleep(2000);
                     Console.Clear();
 
 

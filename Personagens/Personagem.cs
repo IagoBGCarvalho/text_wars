@@ -11,6 +11,7 @@ namespace text_wars
         public ClassePersonagem Classe { get; private set; } // Propriedade referente a escolha de classe, o set é private pois a classe não pode ser alterada depois de escolhida
 
         private bool estaDefendendo = false; // Flag para sinalizar se o personagem está em modo de defesa
+        public int VidaMaxima { get; private set; }
 
         // getters e setters
         public string Nome
@@ -117,6 +118,13 @@ namespace text_wars
             }
         }
 
+        public void ResetarParaBatalha()
+        {
+            /// Restaura a vida de um personagem derrotado
+            this.Vida = this.VidaMaxima;
+            this.estaDefendendo = false;
+        }
+
         // Construtor
         public Personagem(string nome, int vida, double forca, double agilidade, ClassePersonagem classe)
         {
@@ -146,6 +154,7 @@ namespace text_wars
 
             this.Nome = nome;
             this.Vida = vida;
+            this.VidaMaxima = vida;
             this.Forca = forca;
             this.Agilidade = agilidade;
             this.Classe = classe;
