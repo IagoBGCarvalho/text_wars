@@ -54,11 +54,14 @@ namespace text_wars
             }
             set
             {
-                if (value < 0)
+                if (value <= 0)
                 {
-                    vida = 0; // Caso a vida seja menor do que 0, significa que o jogador morreu
+                    vida = 0; // Se o valor for 0 ou negativo, vida vira 0.
                 }
-                vida = Convert.ToInt32(value);
+                else
+                {
+                    vida = Convert.ToInt32(value);
+                }
             }
         }
 

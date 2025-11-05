@@ -27,7 +27,17 @@ Futuramente, mais ações serão implementadas.
 
 ## 🏦 Persistência de dados 
 
-Por enquanto, os dados relacionados aos jogadores e personagens apenas é mantido durante a execução do programa, mas o banco de dados `SQLite` já está sendo implementado utilizando `Entity Framework Core`.
+O banco de dados implementado para o jogo é o `SQLite` e os dados são manipulados por meio do `Entity Framework Core`. O nome do arquivo de banco de dados é **TextWars.db** e está localizado na raiz do projeto. Por enquanto, o banco precisa ser gerado utilizando **migrations** do EF Core, mas futuramente, será implantada a funcionalidade de criar um banco novo a cada primeira execução do programa.
+
+### Tabelas do banco
+
+* `Jogador`: Representa um jogador do mundo real que possui **Id_Jogador**, **Login** e **Senha**.
+* `Personagem` (não implementada): Representa uma instância de uma classe e se refere aos personagens que um Jogador pode ter. Possui **Id_Personagem**, **Id_Jogador_FK**, **Id_Classe_FK**, **Nome** e **Vida_atual**
+* `Classe` (não implementada): Representa o molde de cada personagem, cada classe possui **Id_Classe**, **Nome_Classe**, **Vida_Base**, **Forca_Base** e **Agilidade_Base**.
+
+### Segurança
+
+O projeto utiliza o padrão **DAO (Data Access Object)** que isola a lógica de acesso a dados, como as operações `CRUD` da lógica de negócio. Isso significa que o contexto não é utilizado diretamente, mas sim um arquivo DAO que mapeia um objeto DAO para um contexto.
 
 ## 🚀 Como Jogar
 
