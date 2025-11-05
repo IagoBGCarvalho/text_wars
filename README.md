@@ -20,7 +20,7 @@ Futuramente, mais classes serão implementadas e cada classe terá mecânicas pr
 Após dois jogadores se autenticarem e selecionarem seus personagens, uma batalha de turno começará. Por enquanto, cada jogador possui 3 ações, sendo elas:
 
 1.  **Atacar**: Diminui a vida do defensor pela força do atacante.
-2.  **Defendertacar**: Na próxima vez que tormar dano, o personagem em modo de defesa recebe apenas metade do dano.
+2.  **Defender**: Na próxima vez que tormar dano, o personagem em modo de defesa recebe apenas metade do dano.
 3.  **Passar**: Apenas passa a ação para o outro jogador.
 
 Futuramente, mais ações serão implementadas.
