@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace text_wars;
 
@@ -8,15 +7,11 @@ public class Jogador
 {
     // Classe que representa um Jogador, que pode ter vários personagens
 
-    // Propriedades:
+    [Key]
     public int Id { get; set; }
-    [Required]
-    public string Login { get; set; }
-    [Required]
-    public string Senha { get; set; }
-
-    [NotMapped] // Data anottation que impede a propriedade de ser mapeada pelo EF Core, pois a classe Personagem ainda não está pronta
-    public List<Personagem> PersonagensJogador { get; set; } = new List<Personagem>();
+    public string Login { get; set; } = null!;
+    public string Senha { get; set; } = null!;
+    public virtual ICollection<Personagem> PersonagensJogador { get; set; } = new List<Personagem>(); // Propriedade de navegação, um personagem pode ter N Personagens
 
     //Construtor para o Entity:
     public Jogador() { }

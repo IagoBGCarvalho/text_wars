@@ -1,93 +1,60 @@
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace text_wars
 {
-    public abstract class Personagem
+    public class Personagem
     {
-        // Atributos
-        private string nome = "";
-        private int vida;
-        private double forca;
-        private double agilidade;
+        // Classe que representa um personagem de um jogador. Recebe a chave do jogador para se associar a ele e uma da classe para especificar a vida, força e agilidade base.
+        [Key]
+        public int Id { get; set; }
+        [Required] // O nome não pode ser nulo ou branco
+        public string Nome { get; set; } = null!;
+        public int VidaAtual { get; set; }
+        public int VidaMaxima { get; set; }
+        public double Forca { get; set; }
+        public double Agilidade { get; set; }
 
-        public ClassePersonagem Classe { get; private set; } // Propriedade referente a escolha de classe, o set é private pois a classe não pode ser alterada depois de escolhida
+        // Relacionamento com Jogador
+        [ForeignKey("Jogador")] // Especifica que a propriedade se trata de uma chave estrangeira da tabela Jogador
+        public int JogadorId { get; set; }
+        public virtual Jogador Jogador { get; set; } = null!; // Propriedade de navegação, uma instância de um personagem está ligada a um jogador
 
+        // Relacionamento com Classe
+        [ForeignKey("Classe")]
+        public int ClasseId { get; set; }
+        public virtual Classe Classe { get; set; } = null!; // Um personagem possui, como molde, uma classe
+
+        [NotMapped] // Esta propriedade é utilizada somente na lógica de jogo, então não precisa ser mapeada pelo EF
         private bool estaDefendendo = false; // Flag para sinalizar se o personagem está em modo de defesa
-        public int VidaMaxima { get; private set; }
 
-        // getters e setters
-        public string Nome
+        public Personagem() { } // Construtor vazio para o EF
+        
+        // Construtor
+        public Personagem(string nome, Jogador jogador, Classe classe)
         {
-            get
+            // Validação do nome
+            if (string.IsNullOrEmpty(nome))
             {
-                return nome;
+                throw new ArgumentException("O nome do personagem nao pode ser vazio.", nameof(nome));
             }
-            set
-            {
-                if (value.Length <= 0)
-                {
-                    return;
-                }
-                nome = value;
-            }
-        }
 
-        public double Forca
-        {
-            get
-            {
-                return forca;
-            }
-            set
-            {
-                if (value < 0)
-                {
-                    return;
-                }
-                forca = value;
-            }
-        }
+            this.Nome = nome;
+            this.Jogador = jogador; // Utiliza a propriedade de navegação para associar um personagem ao jogador
+            this.Classe = classe; // Associa o personagem à classe
 
-        public double Vida
-        {
-            get
-            {
-                return vida;
-            }
-            set
-            {
-                if (value <= 0)
-                {
-                    vida = 0; // Se o valor for 0 ou negativo, vida vira 0.
-                }
-                else
-                {
-                    vida = Convert.ToInt32(value);
-                }
-            }
-        }
-
-        public double Agilidade
-        {
-            get
-            {
-                return agilidade;
-
-            }
-            set
-            {
-                if (value < 0)
-                {
-                    return;
-                }
-
-                agilidade = value;
-            }
+            // Utilizando a classe como molde para os stats:
+            this.VidaMaxima = classe.VidaBase;
+            this.VidaAtual = classe.VidaBase;
+            this.Forca = classe.ForcaBase;
+            this.Agilidade = classe.AgilidadeBase;
         }
 
         // Métodos
         public virtual void atacar(Personagem alvo)
         {
             // Virtual está aplicando um método padrão que PODE ser alterado por outras classes utilizando override
-            double dano = this.Forca;
+            double dano = this.Forca; // Ele lê a Força que foi pega da Classe
             Console.WriteLine(this.Nome + " ataca " + alvo.Nome + " com " + dano + " de força!" + "\n");
             alvo.ReceberDano(dano);
         }
@@ -109,67 +76,25 @@ namespace text_wars
                 this.estaDefendendo = false;
             }
 
-            this.Vida -= danoBruto; // Converte o dano para int e reduz a vida do alvo
+            // Precisamos ter certeza que o 'set' da VidaAtual lida com valores <= 0
+            this.VidaAtual -= (int)danoBruto; 
+            if (this.VidaAtual < 0) this.VidaAtual = 0; // Garantia
 
-            if (this.Vida <= 0)
+            if (this.VidaAtual <= 0)
             {
                 Console.WriteLine(this.Nome + " foi derrotado." + "\n");
             }
             else
             {
-                Console.WriteLine("A vida de " + this.Nome + " agora é " + this.Vida + "\n");
+                Console.WriteLine("A vida de " + this.Nome + " agora é " + this.VidaAtual + "\n");
             }
         }
 
         public void ResetarParaBatalha()
         {
-            /// Restaura a vida de um personagem derrotado
-            this.Vida = this.VidaMaxima;
+            // Restaura a vida de um personagem derrotado
+            this.VidaAtual = this.VidaMaxima;
             this.estaDefendendo = false;
         }
-
-        // Construtor
-        public Personagem(string nome, int vida, double forca, double agilidade, ClassePersonagem classe)
-        {
-            // Validação do nome
-            if (string.IsNullOrEmpty(nome))
-            {
-                throw new ArgumentException("O nome do personagem nao pode ser vazio.", nameof(nome));
-            }
-
-            // Validação da vida
-            if (vida <= 0)
-            {
-                throw new ArgumentException("A vida inicial deve ser maior do que zero", nameof(vida));
-            }
-
-            // Validacao da força
-            if (forca <= 0)
-            {
-                throw new ArgumentException("A força do personagem não pode ser menor ou igual a 0.", nameof(forca));
-            }
-
-            // Validacao da força
-            if (agilidade <= 0)
-            {
-                throw new ArgumentException("A agilidade do personagem não pode ser menor ou igual a 0.", nameof(agilidade));
-            }
-
-            this.Nome = nome;
-            this.Vida = vida;
-            this.VidaMaxima = vida;
-            this.Forca = forca;
-            this.Agilidade = agilidade;
-            this.Classe = classe;
-
-        }
-    }
-
-    public enum ClassePersonagem
-    {
-        // Menu de opções para escolha de classe no construtor do personagem
-        Indefinido, // Valor padrão
-        Guerreiro,
-        Mago
     }
 }
