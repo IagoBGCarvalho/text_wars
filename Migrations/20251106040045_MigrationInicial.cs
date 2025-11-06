@@ -11,7 +11,7 @@ namespace text_wars.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Classes",
+                name: "Classe",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
@@ -23,7 +23,7 @@ namespace text_wars.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Classes", x => x.Id);
+                    table.PrimaryKey("PK_Classe", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -41,7 +41,7 @@ namespace text_wars.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Personagens",
+                name: "Personagem",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
@@ -56,20 +56,26 @@ namespace text_wars.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Personagens", x => x.Id);
+                    table.PrimaryKey("PK_Personagem", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Personagens_Classes_ClasseId",
+                        name: "FK_Personagem_Classe_ClasseId",
                         column: x => x.ClasseId,
-                        principalTable: "Classes",
+                        principalTable: "Classe",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Personagens_Jogador_JogadorId",
+                        name: "FK_Personagem_Jogador_JogadorId",
                         column: x => x.JogadorId,
                         principalTable: "Jogador",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Classe_NomeClasse",
+                table: "Classe",
+                column: "NomeClasse",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Jogador_Login",
@@ -78,13 +84,13 @@ namespace text_wars.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Personagens_ClasseId",
-                table: "Personagens",
+                name: "IX_Personagem_ClasseId",
+                table: "Personagem",
                 column: "ClasseId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Personagens_JogadorId",
-                table: "Personagens",
+                name: "IX_Personagem_JogadorId",
+                table: "Personagem",
                 column: "JogadorId");
         }
 
@@ -92,10 +98,10 @@ namespace text_wars.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Personagens");
+                name: "Personagem");
 
             migrationBuilder.DropTable(
-                name: "Classes");
+                name: "Classe");
 
             migrationBuilder.DropTable(
                 name: "Jogador");

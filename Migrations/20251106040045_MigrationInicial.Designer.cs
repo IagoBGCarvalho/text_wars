@@ -10,7 +10,7 @@ using text_wars;
 namespace text_wars.Migrations
 {
     [DbContext(typeof(Contexto))]
-    [Migration("20251106024629_MigrationInicial")]
+    [Migration("20251106040045_MigrationInicial")]
     partial class MigrationInicial
     {
         /// <inheritdoc />
@@ -40,7 +40,10 @@ namespace text_wars.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Classes");
+                    b.HasIndex("NomeClasse")
+                        .IsUnique();
+
+                    b.ToTable("Classe");
                 });
 
             modelBuilder.Entity("text_wars.Jogador", b =>
@@ -99,7 +102,7 @@ namespace text_wars.Migrations
 
                     b.HasIndex("JogadorId");
 
-                    b.ToTable("Personagens");
+                    b.ToTable("Personagem");
                 });
 
             modelBuilder.Entity("text_wars.Personagem", b =>

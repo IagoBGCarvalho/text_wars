@@ -7,8 +7,8 @@ public class Contexto : DbContext
 {
     // Classes a serem persistidas:
     public DbSet<Jogador> Jogador { get; set; } // Tabela de jogadores
-    public DbSet<Personagem> Personagens { get; set; } // Tabela de personagens
-    public DbSet<Classe> Classes { get; set; } // Tabela de classes
+    public DbSet<Personagem> Personagem { get; set; } // Tabela de personagens
+    public DbSet<Classe> Classe { get; set; } // Tabela de classes
 
     // Definindo a string de conexão:
     private string _stringDeConexao = "Data source=TextWars.db";
@@ -42,9 +42,13 @@ public class Contexto : DbContext
             .WithOne(p => p.Classe) // Cada personagem possui apenas 1 classe
             .HasForeignKey(p => p.ClasseId); // A chave em Personagem para o relacionamento é ClasseId
 
-        // Definindo que cada jogador possui um único login:
+        // Regras de unicidade:
         modelBuilder.Entity<Jogador>()
-            .HasIndex(j => j.Login)
+            .HasIndex(j => j.Login) // Cada jogador possui um único login:
+            .IsUnique();
+        
+        modelBuilder.Entity<Classe>()
+            .HasIndex(c => c.NomeClasse) // Cada classe deve ter um único nome
             .IsUnique();
     }
 }

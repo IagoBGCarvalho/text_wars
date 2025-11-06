@@ -31,9 +31,9 @@ O banco de dados implementado para o jogo é o `SQLite` e os dados são manipula
 
 ### Tabelas do banco
 
-* `Jogador`: Representa um jogador do mundo real que possui **Id_Jogador**, **Login** e **Senha**.
-* `Personagem` (não implementada): Representa uma instância de uma classe e se refere aos personagens que um Jogador pode ter. Possui **Id_Personagem**, **Id_Jogador_FK**, **Id_Classe_FK**, **Nome** e **Vida_atual**
-* `Classe` (não implementada): Representa o molde de cada personagem, cada classe possui **Id_Classe**, **Nome_Classe**, **Vida_Base**, **Forca_Base** e **Agilidade_Base**.
+* `Jogador`: Representa um jogador do mundo real que possui **Id**, **Login** e **Senha**.
+* `Personagem`: Representa uma instância de uma classe e se refere aos personagens que um Jogador pode ter. Possui **Id**,  **Nome**, **VidaAtual**, **VidaMaxima**, **Forca**, **Agilidade**, **JogadorID** e **ClasseID**,
+* `Classe` (não implementada): Representa o molde de cada personagem, cada classe possui **Id**, **NomeClasse**, **VidaBase**, **ForcaBase** e **AgilidadeBase**.
 
 ### Segurança
 
