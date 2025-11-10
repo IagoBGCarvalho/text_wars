@@ -2,6 +2,8 @@
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace text_wars.Migrations
 {
     /// <inheritdoc />
@@ -69,6 +71,15 @@ namespace text_wars.Migrations
                         principalTable: "Jogador",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "Classe",
+                columns: new[] { "Id", "AgilidadeBase", "ForcaBase", "NomeClasse", "VidaBase" },
+                values: new object[,]
+                {
+                    { 1, 30.0, 35.0, "Guerreiro", 100 },
+                    { 2, 50.0, 20.0, "Mago", 80 }
                 });
 
             migrationBuilder.CreateIndex(

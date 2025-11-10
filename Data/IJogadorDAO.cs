@@ -6,4 +6,5 @@ public interface IJogadorDAO
     IList<Jogador> Jogadores(); // Read
     void Atualizar(Jogador j); // Update
     void Remover(Jogador j); // Delete
+    Jogador? BuscarPorLogin(string login);
 }

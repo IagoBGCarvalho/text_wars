@@ -46,9 +46,30 @@ public class Contexto : DbContext
         modelBuilder.Entity<Jogador>()
             .HasIndex(j => j.Login) // Cada jogador possui um único login:
             .IsUnique();
-        
+
         modelBuilder.Entity<Classe>()
             .HasIndex(c => c.NomeClasse) // Cada classe deve ter um único nome
             .IsUnique();
+        
+        // Data seeding para classes:
+        modelBuilder.Entity<Classe>().HasData(
+            new Classe 
+            { 
+                Id = 1, // É NECESSÁRIO ESPECIFICAR A PK DE CADA DATA SEEDING!
+                NomeClasse = "Guerreiro", 
+                VidaBase = 100, 
+                ForcaBase = 35, 
+                AgilidadeBase = 30 
+            },
+
+            new Classe 
+            { 
+                Id = 2, 
+                NomeClasse = "Mago", 
+                VidaBase = 80, 
+                ForcaBase = 20, 
+                AgilidadeBase = 50 
+            }
+        );
     }
 }

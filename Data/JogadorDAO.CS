@@ -1,36 +1,41 @@
 
 namespace text_wars
 {
-    class JogadorDAO : IDisposable, IJogadorDAO
+    class JogadorDAO : IJogadorDAO
     {
         private Contexto contexto;
-        public JogadorDAO()
+        public JogadorDAO(Contexto contextoExterno)
         {
-            this.contexto = new Contexto();
+            this.contexto = contextoExterno;
         }
+
         public void Adicionar(Jogador j)
         {
-            throw new NotImplementedException();
+            contexto.Jogador.Add(j);
+            contexto.SaveChanges();
         }
 
         public void Atualizar(Jogador j)
         {
-            throw new NotImplementedException();
+            contexto.Jogador.Update(j);
+            contexto.SaveChanges();
         }
 
         public IList<Jogador> Jogadores()
         {
-            throw new NotImplementedException();
+            var jogadores = contexto.Jogador.ToList();
+            return jogadores;
         }
 
         public void Remover(Jogador j)
         {
-            throw new NotImplementedException();
+            contexto.Jogador.Remove(j);
+            contexto.SaveChanges();
         }
-        
-        public void Dispose()
+
+        public Jogador? BuscarPorLogin(string login)
         {
-            contexto.Dispose();
+            return contexto.Jogador.FirstOrDefault(j => j.Login == login);
         }
     }
 }

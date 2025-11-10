@@ -10,7 +10,7 @@ using text_wars;
 namespace text_wars.Migrations
 {
     [DbContext(typeof(Contexto))]
-    [Migration("20251106040045_MigrationInicial")]
+    [Migration("20251110033413_MigrationInicial")]
     partial class MigrationInicial
     {
         /// <inheritdoc />
@@ -44,6 +44,24 @@ namespace text_wars.Migrations
                         .IsUnique();
 
                     b.ToTable("Classe");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            AgilidadeBase = 30.0,
+                            ForcaBase = 35.0,
+                            NomeClasse = "Guerreiro",
+                            VidaBase = 100
+                        },
+                        new
+                        {
+                            Id = 2,
+                            AgilidadeBase = 50.0,
+                            ForcaBase = 20.0,
+                            NomeClasse = "Mago",
+                            VidaBase = 80
+                        });
                 });
 
             modelBuilder.Entity("text_wars.Jogador", b =>
