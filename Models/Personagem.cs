@@ -1,14 +1,9 @@
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-
 namespace text_wars
 {
     public class Personagem
     {
         // Classe que representa um personagem de um jogador. Recebe a chave do jogador para se associar a ele e uma da classe para especificar a vida, força e agilidade base.
-        [Key]
         public int Id { get; set; }
-        [Required] // O nome não pode ser nulo ou branco
         public string Nome { get; set; } = null!;
         public int VidaAtual { get; set; }
         public int VidaMaxima { get; set; }
@@ -16,17 +11,14 @@ namespace text_wars
         public double Agilidade { get; set; }
 
         // Relacionamento com Jogador
-        [ForeignKey("Jogador")] // Especifica que a propriedade se trata de uma chave estrangeira da tabela Jogador
         public int JogadorId { get; set; }
         public virtual Jogador Jogador { get; set; } = null!; // Propriedade de navegação, uma instância de um personagem está ligada a um jogador
 
         // Relacionamento com Classe
-        [ForeignKey("Classe")]
         public int ClasseId { get; set; }
         public virtual Classe Classe { get; set; } = null!; // Um personagem possui, como molde, uma classe
 
-        [NotMapped] // Esta propriedade é utilizada somente na lógica de jogo, então não precisa ser mapeada pelo EF
-        private bool estaDefendendo = false; // Flag para sinalizar se o personagem está em modo de defesa
+        private bool estaDefendendo = false; // Flag para sinalizar se o personagem está em modo de defesa. Como tem a visibilidade privada, o EF Core não mapeia ela.
 
         public Personagem() { } // Construtor vazio para o EF
         

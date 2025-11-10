@@ -1,12 +1,10 @@
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 
 namespace text_wars
 {
     public class Classe
     {
         // Classe que representa a tabela que contém as classes que podem ser escolhidas na criação de um personagem
-        [Key]
         public int Id { get; set; }
         public string NomeClasse { get; set; } = null!;
         public int VidaBase { get; set; }

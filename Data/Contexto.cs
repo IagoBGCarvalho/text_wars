@@ -29,7 +29,7 @@ public class Contexto : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        // Configurações de relacionamento:
+        // CONFIGURAÇÕES DE RELACIONAMENTOS:
         // Relacão Jogador (1) -> Personagem (N)
         modelBuilder.Entity<Jogador>()
             .HasMany(j => j.PersonagensJogador) // Um jogador tem N Personagens
@@ -41,17 +41,54 @@ public class Contexto : DbContext
             .HasMany(c => c.Personagens) // Uma classe tem N Personagens associados a ela
             .WithOne(p => p.Classe) // Cada personagem possui apenas 1 classe
             .HasForeignKey(p => p.ClasseId); // A chave em Personagem para o relacionamento é ClasseId
-
-        // Regras de unicidade:
-        modelBuilder.Entity<Jogador>()
-            .HasIndex(j => j.Login) // Cada jogador possui um único login:
-            .IsUnique();
-
-        modelBuilder.Entity<Classe>()
-            .HasIndex(c => c.NomeClasse) // Cada classe deve ter um único nome
-            .IsUnique();
         
-        // Data seeding para classes:
+        // CONFIGURAÇÃO ESTRUTURAL DA TABELA JOGADOR:
+        modelBuilder.Entity<Jogador>(entity =>
+        {
+            entity.ToTable("Jogador");
+
+            entity.HasKey(j => j.Id);
+
+            entity.Property(j => j.Login)
+                  .HasColumnType("varchar(20)")
+                  .IsRequired();
+            
+            entity.Property(j => j.Senha)
+                  .HasColumnType("varchar(40)")
+                  .IsRequired();
+
+            entity.HasIndex(j => j.Login)
+                  .IsUnique(); // Cada jogador possui um login único
+        });
+
+        // CONFIGURAÇÃO ESTRUTURAL DA TABELA CLASSE:
+        modelBuilder.Entity<Classe>(entity =>
+        {
+            entity.ToTable("Classe");
+
+            entity.HasKey(c => c.Id);
+
+            entity.Property(c => c.NomeClasse)
+                  .HasColumnType("varchar(30)") // Definindo o tipo da coluna
+                  .IsRequired(); // Definindo a coluna como NOT NULL
+
+            entity.HasIndex(c => c.NomeClasse)
+                  .IsUnique(); // Cada classe deve ter um único nome
+        });
+
+        // CONFIGURAÇÃO ESTRUTURAL DA TABELA PERSONAGEM:
+        modelBuilder.Entity<Personagem>(entity =>
+        {
+            entity.ToTable("Personagem");
+
+            entity.HasKey(p => p.Id);
+
+            entity.Property(p => p.Nome)
+                  .HasColumnType("varchar(20)")
+                  .IsRequired();
+        });
+        
+        // DATA SEEDING PARA CLASSES:
         modelBuilder.Entity<Classe>().HasData(
             new Classe 
             { 

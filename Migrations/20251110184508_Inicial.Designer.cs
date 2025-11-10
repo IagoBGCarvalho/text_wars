@@ -10,8 +10,8 @@ using text_wars;
 namespace text_wars.Migrations
 {
     [DbContext(typeof(Contexto))]
-    [Migration("20251110033413_MigrationInicial")]
-    partial class MigrationInicial
+    [Migration("20251110184508_Inicial")]
+    partial class Inicial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -33,7 +33,7 @@ namespace text_wars.Migrations
 
                     b.Property<string>("NomeClasse")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("varchar(30)");
 
                     b.Property<int>("VidaBase")
                         .HasColumnType("INTEGER");
@@ -43,7 +43,7 @@ namespace text_wars.Migrations
                     b.HasIndex("NomeClasse")
                         .IsUnique();
 
-                    b.ToTable("Classe");
+                    b.ToTable("Classe", (string)null);
 
                     b.HasData(
                         new
@@ -72,18 +72,18 @@ namespace text_wars.Migrations
 
                     b.Property<string>("Login")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("varchar(20)");
 
                     b.Property<string>("Senha")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("varchar(40)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("Login")
                         .IsUnique();
 
-                    b.ToTable("Jogador");
+                    b.ToTable("Jogador", (string)null);
                 });
 
             modelBuilder.Entity("text_wars.Personagem", b =>
@@ -106,7 +106,7 @@ namespace text_wars.Migrations
 
                     b.Property<string>("Nome")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("varchar(20)");
 
                     b.Property<int>("VidaAtual")
                         .HasColumnType("INTEGER");
@@ -120,7 +120,7 @@ namespace text_wars.Migrations
 
                     b.HasIndex("JogadorId");
 
-                    b.ToTable("Personagem");
+                    b.ToTable("Personagem", (string)null);
                 });
 
             modelBuilder.Entity("text_wars.Personagem", b =>

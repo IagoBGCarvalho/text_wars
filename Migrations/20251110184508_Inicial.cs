@@ -7,7 +7,7 @@
 namespace text_wars.Migrations
 {
     /// <inheritdoc />
-    public partial class MigrationInicial : Migration
+    public partial class Inicial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -18,7 +18,7 @@ namespace text_wars.Migrations
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    NomeClasse = table.Column<string>(type: "TEXT", nullable: false),
+                    NomeClasse = table.Column<string>(type: "varchar(30)", nullable: false),
                     VidaBase = table.Column<int>(type: "INTEGER", nullable: false),
                     ForcaBase = table.Column<double>(type: "REAL", nullable: false),
                     AgilidadeBase = table.Column<double>(type: "REAL", nullable: false)
@@ -34,8 +34,8 @@ namespace text_wars.Migrations
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Login = table.Column<string>(type: "TEXT", nullable: false),
-                    Senha = table.Column<string>(type: "TEXT", nullable: false)
+                    Login = table.Column<string>(type: "varchar(20)", nullable: false),
+                    Senha = table.Column<string>(type: "varchar(40)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -48,7 +48,7 @@ namespace text_wars.Migrations
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Nome = table.Column<string>(type: "TEXT", nullable: false),
+                    Nome = table.Column<string>(type: "varchar(20)", nullable: false),
                     VidaAtual = table.Column<int>(type: "INTEGER", nullable: false),
                     VidaMaxima = table.Column<int>(type: "INTEGER", nullable: false),
                     Forca = table.Column<double>(type: "REAL", nullable: false),
